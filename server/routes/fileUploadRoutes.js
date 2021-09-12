@@ -40,41 +40,41 @@ router.route("/:id").get((req, res, next) => {
 
 // route to upload a pdf document file
 // In upload.single("file") - the name inside the single-quote is the name of the field that is going to be uploaded.
-router.post("/upload", upload.single("file"), function(req, res) {
+router.post("/upload", upload.single("file"), function (req, res) {
   const file = req.file;
   const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
 
   let s3bucket = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
+    accessKeyId: "AKIAXH6TZWEE5TDACGKW",
+    secretAccessKey: "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",
+    region: "us-east-1"
   });
 
-  console.log(process.env.AWS_ACCESS_KEY_ID);
-  console.log(process.env.AWS_SECRET_ACCESS_KEY);
+  console.log("AKIAXH6TZWEE5TDACGKW");
+  console.log("tZIMLsJnCQGOpczVmjpKHY0F1OvpTNoNfTF9qzCp");
 
   //Where you want to store your file
 
   var params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: "common-task-images",
     Key: file.originalname,
     Body: file.buffer,
     ContentType: file.mimetype,
     ACL: "public-read"
   };
 
-  s3bucket.upload(params, function(err, data) {
+  s3bucket.upload(params, function (err, data) {
     if (err) {
       res.status(500).json({ error: true, Message: err });
     } else {
       res.send({ data });
       var newFileUploaded = {
         description: req.body.description,
-        fileLink: s3FileURL + file.originalname,
+        fileLink: file.originalname,
         s3_key: params.Key
       };
       var document = new DOCUMENT(newFileUploaded);
-      document.save(function(error, newFile) {
+      document.save(function (error, newFile) {
         if (error) {
           throw error;
         }
@@ -108,13 +108,13 @@ router.route("/:id").delete((req, res, next) => {
     //Now Delete the file from AWS-S3
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
     let s3bucket = new AWS.S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION
+      accessKeyId: "AKIAXH6TZWEE5TDACGKW",
+      secretAccessKey: "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",
+      region: "us-east-1"
     });
 
     let params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: "common-task-images",
       Key: result.s3_key
     };
 

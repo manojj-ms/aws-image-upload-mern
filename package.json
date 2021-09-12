@@ -19,7 +19,7 @@
         "react-bootstrap": "^0.32.4",
         "react-dom": "^16.6.0",
         "react-router-dom": "^4.3.1",
-        "react-scripts": "2.0.5",
+        "react-scripts": "^2.0.5",
         "reactstrap": "^6.5.0"
     },
     "keywords": [
@@ -35,7 +35,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "dev": "concurrently \"react-scripts start\" \"nodemon ./bin/www\""
+        "dev": "react-scripts start"
     },
     "proxy": "http://localhost:8080",
     "eslintConfig": {

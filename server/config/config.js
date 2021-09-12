@@ -3,11 +3,14 @@
 const mongoose = require('mongoose');
 
 module.exports = {
-    'database': process.env.MONGO_DB,
+    'database': 'mongodb://localhost:27017/tutorials_db',
 
     // connect function to create a mongoDB connection
-    'connectDB' : function () {
-        mongoose.connect(this.database)
+    'connectDB': function () {
+        mongoose.connect(this.database, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
     },
 }
 // on mongo connection open event print a console statement
